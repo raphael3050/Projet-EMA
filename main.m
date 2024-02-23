@@ -1,6 +1,11 @@
+%% Fichier principal de l'attaque 
+% Auteur : Raphaël AZOU
+% Date : 23/02/2024
+
 clc
 close all
 echo off 
+clearvars
 
 load("key.mat", "key_mat");
 load("cto.mat","cto_mat");
@@ -18,7 +23,7 @@ invSBox(SBox(1:256)+1)=0:255;
 shiftrow=[1,6,11,16,5,10,15,4,9,14,3,8,13,2,7,12];
 
 
-%%  Question 4 - w10
+%%  Question 4
 main_key = reshape((key_mat(20000, :))', 4,4);
 sub_keys = keysched2(uint32(main_key));
 % La sous-clée qu'on chercher à retrouver
@@ -38,8 +43,6 @@ best_candidate = zeros(1, 16);
 figure
 for index = 1:16
     subplot(4, 4, index);
-    % On prend le premier kième octet des 20000 chiffrés et on duplique la
-    % colonne 256 fois pour pouvoir faire le xor avec les hypothèses
     cto_extended = uint8(single(cto_mat(:, index) * ones(1, 256)));
     Z2 = bitxor(cto_extended, hypothese);
     Z3 = invSBox(Z2+1);
@@ -47,7 +50,6 @@ for index = 1:16
     dh_cto_z3 = Weight_Hamming_vect(bitxor(uint8(Z3), uint8(cto_mat(:, shiftrow(index)) * ones(1, 256))) + 1);
     correlation = corr(single(dh_cto_z3), fuites_mat(:,lastround_min:lastround_max));
     best_candidate(:,index) = affiche_correlation(correlation);
-    title('k=',num2str(index))
 end
 
 fprintf("----- Meilleure candidat pour w10 ----- \n")

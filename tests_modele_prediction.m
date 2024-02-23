@@ -2,6 +2,7 @@
 clc
 close all
 echo off 
+clearvars 
 
 %% Chargement des matrices
 load("key.mat", "key_mat");
@@ -41,12 +42,12 @@ disp(w10(octet))
 
 %% Début du test des 3 métriques
 figure
-cto_extended = uint8(single(cto_mat(:, octet) * ones(1, 256)));
+cto_extended = uint8(cto_mat(:, shiftrow(octet)) * ones(1, 256));
 Z2 = bitxor(cto_extended, hypothese);
 Z3 = invSBox(Z2+1);
 
 hamming_weight_z3 = Weight_Hamming_vect(uint8(Z3)+ 1);
-hamming_distance_cto_z3 = Weight_Hamming_vect(bitxor(uint8(Z3), uint8(cto_mat(:, shiftrow(octet)) * ones(1, 256))) + 1);
+hamming_distance_cto_z3 = Weight_Hamming_vect(bitxor(uint8(Z3), cto_extended) + 1);
 hamming_distance_z2_z3 = Weight_Hamming_vect(bitxor(uint8(Z3), uint8(Z2)) + 1);
 
 correlation_1 = corr(single(hamming_weight_z3), fuites_mat);

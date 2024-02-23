@@ -1,9 +1,10 @@
+%% Tracé d'une fuite et de la moyenne des fuites
 clc
 close all
 echo off 
+clearvars
 
 load("fuites.mat", "fuites_mat");
-
 
 %% Question 1 - Tracé d'une courbe de consommation
 
@@ -16,7 +17,7 @@ grid on;
 
 %% Question 2 - Tracé de la moyenne des courbes de consommation
 
-% Calcul de la moyenne le long de l'axe 1 (colonnes)
+% Calcul de la moyenne le long de l'axe 1
 fuites_mean = mean(fuites_mat, 1);
 figure;
 plot(fuites_mean); hold on;

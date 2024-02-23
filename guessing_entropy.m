@@ -1,3 +1,4 @@
+%% Métrique Guessing Entropy
 clc
 close all
 clearvars
@@ -33,22 +34,28 @@ hypothese = uint8(ones(size(cto_mat, 1), 1) * (0:255)); % [20000x256]
 nt=[500 1000 2000 4000 8000 11000 12000 14000 15000 18000 20000];
 results_vector = zeros(size(nt));
 
+% Plage de valeurs du dernier round 
+lastround_min = 3000;
+lastround_max = 3500;
+
 figure
 hold on;
 for index=1:16 
     for indice = 1:length(nt)
-        cto_extended = uint8(single(cto_mat(:, index)) * ones(1, 256));
-        cto_extended_shift = uint8(single(cto_inv(:, index)) * ones(1, 256));
-        Z1 = bitxor(cto_extended_shift, hypothese);
-        Z3 = invSBox(Z1 + 1);
-        dh_03 = Weight_Hamming_vect(bitxor(uint8(Z3), uint8(cto_extended)) + 1);
-        correlation = corr(single(dh_03(1:nt(indice), :)), fuites_mat(1:nt(indice), 3000:3500));
+        cto_extended = uint8(single(cto_mat(:, index) * ones(1, 256)));
+        Z2 = bitxor(cto_extended, hypothese);
+        Z3 = invSBox(Z2+1);
+   
+        dh_cto_z3 = Weight_Hamming_vect(bitxor(uint8(Z3), uint8(cto_mat(:, shiftrow(index)) * ones(1, 256))) + 1);
+        correlation = corr(single(dh_cto_z3(1:nt(indice),:)), fuites_mat(1:nt(indice),lastround_min:lastround_max));
         [RK, IK] = sort(max(abs(correlation), [], 2), 'descend');
         ge(indice) = IK(1) - 1; 
     end 
-    plot(nt, ge,'DisplayName','k=')
+    line_handles(index) = plot(nt, ge, 'DisplayName', ['k = ' num2str(index)]); % pour les légendes des courbes
 end
 hold off;
 for i = 1:length(nt)
         xline(nt(i), '--', {'', '', ''}, 'Color', 'b');
 end
+legend(line_handles, 'Location', 'best'); % Crée la légende en utilisant les handles des lignes
+

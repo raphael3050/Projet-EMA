@@ -1,6 +1,8 @@
+%% Extraction des données des fichiers .csv
 clc
 close all
 echo off 
+clearvars
 
 % Début du chrono pour mesurer le temps d'execution
 tic
@@ -22,7 +24,6 @@ pti_mat = zeros(Nt, 16);
 cto_mat = zeros(Nt, 16);
 key_mat = zeros(Nt, 16);
 fuites_mat = zeros(Nt, Nm);
-
 
 h = waitbar(0,'Please wait...');
 % Parcourir les fichiers dans le dossier

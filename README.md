@@ -12,7 +12,7 @@ Cette archive contient l'ensemble des scripts Matlab utilisés pour mettre en pl
 ---
 
 ####  keysched2.m
-Algorhitme implémentant le `Key Scheduler` de AES. Celui-ci est utilisé pour calculer les sous-clés à partir de la clé principale, et notamment pour calculer la sous-clé $w_{10}$ afin de la comparer avec le résultat de notre attaque. 
+Algorithme implémentant le `Key Scheduler` de AES. Celui-ci est utilisé pour calculer les sous-clés à partir de la clé principale, et notamment pour calculer la sous-clé $w_{10}$ afin de la comparer avec le résultat de notre attaque. 
 
 ####  data_extract.m
 Ce script extrait les données de chaque nom de fichier `csv` de l'archive `SECU8917` pour constituer les matrices `key_mat` `cto_mat` `pti_mat` et `fuites_mat`.
@@ -27,7 +27,7 @@ Le rôle de ce fichier est de tester les différents modèles de prédictions th
 
 ####  moyenne_fuites.m
 
-Ce script trace la courbe de la trace n°10000, puis trace ensuite une courbe correspondant à la moyenne des fuites. Les figures résultantes sont enregistrées dans le dossier `figures`.
+Ce script trace la courbe de la fuite n°10000, puis trace ensuite une courbe correspondant à la moyenne des fuites. Les figures résultantes sont enregistrées dans le dossier `figures`.
 
 ####  affiche_correlation.m
 
@@ -35,4 +35,4 @@ Fonction utilisée pour afficher nos 256 courbes de corrélation et pour retourn
 
 #### guessing_entropy.m
 
-Ce script permet d'optimiser l'attaque en utilisant le métrique Guessing Entropy, dans le but de minimiser le nombre de traces nécessaires à la réussite de celle-ci.
+Ce script permet d'optimiser l'attaque en utilisant la métrique Guessing Entropy, dans le but de minimiser le nombre de traces nécessaires à la réussite de celle-ci.

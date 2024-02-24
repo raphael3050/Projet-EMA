@@ -66,15 +66,5 @@ save('fuites.mat', 'fuites_mat')
 % Fin du chronomètre
 temps_execution = toc;
 
-% Calcul de la moyenne le long de l'axe 1
-fuites_mean = mean(fuites_mat, 1);
-
-% Tracé de la moyenne
-plot(fuites_mean);
-xlabel('Échantillons');
-ylabel('Moyenne des traces');
-title('Tracé de la moyenne des traces');
-grid on;
-
 temps_execution = toc;
 disp(['Temps d''exécution total : ', num2str(temps_execution), ' secondes']);
